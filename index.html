@@ -66,9 +66,7 @@
       position: fixed; top: 0; left: 0; width: 100%; z-index: 220; 
       background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(16px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      transform: translateY(-100%); transition: transform 0.5s cubic-bezier(.4,0,.2,1);
     }
-    #top-nav.show { transform: translateY(0); }
     .top-nav-inner {
       max-width: 1500px; height: 70px; margin: 0 auto; padding: 0 24px;
       display: flex; align-items: center; justify-content: space-between;
@@ -119,12 +117,11 @@
     }
     
     .hero-assets { position: absolute; inset: 0; z-index: 20; pointer-events: none; }
-    .char-king { position: absolute; right: 25%; bottom: -32%; top: auto; width: clamp(400px, 50vw, 750px); animation: floatSlow 6s ease-in-out infinite; filter: drop-shadow(0 30px 40px rgba(0,0,0,0.6)); }
+    .char-king { position: absolute; right: 25%; bottom: -15%; top: auto; width: clamp(400px, 50vw, 750px); animation: floatSlow 6s ease-in-out infinite; filter: drop-shadow(0 30px 40px rgba(0,0,0,0.6)); }
     .char-sub1 { position: absolute; left: 5%; top: 35%; width: clamp(150px, 20vw, 300px); animation: floatSlow 5s ease-in-out infinite 1s; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5)); }
     .char-sub2 { position: absolute; left: -2%; bottom: 10%; width: clamp(180px, 25vw, 350px); animation: floatSlow 7s ease-in-out infinite 0.5s; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5)); opacity: 0.8; }
-    .char-sub3 { position: absolute; right: 5%; bottom: 25%; width: clamp(120px, 18vw, 250px); animation: floatSlow 4.5s ease-in-out infinite 2s; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.5)); }
 
-    .main-logo-img { position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); width: clamp(280px, 40vw, 600px); z-index: 90; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.8)); animation: pulseLogo 4s ease-in-out infinite; }
+    .game-logo-top-right { position: absolute; top: 100px; right: 40px; width: clamp(120px, 15vw, 220px); z-index: 110; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5)); animation: floatSlow 6s ease-in-out infinite reverse; }
     
     .hero-copy { position: absolute; left: 6vw; bottom: 12vh; z-index: 110; }
     .hero-kicker { display: inline-block; padding: 8px 16px; border-radius: 999px; background: rgba(59,130,246,0.2); border: 1px solid rgba(59,130,246,0.5); color: #93c5fd; font-size: 13px; font-weight: 900; backdrop-filter: blur(8px); margin-bottom: 16px; }
@@ -218,6 +215,12 @@
     .issue-keyword { display: inline-block; background: #fee2e2; color: #ef4444; font-size: 13px; font-weight: 800; padding: 6px 12px; border-radius: 8px; margin-bottom: 16px; border: 1px solid #fecaca; }
     .issue-summary { font-size: 16px; color: #334155; line-height: 1.7; font-weight: 500; margin: 0; }
 
+    .char-sub3-footer {
+      position: absolute; right: 20px; bottom: 20px; width: clamp(120px, 15vw, 220px);
+      animation: floatSlow 4.5s ease-in-out infinite 2s; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.15));
+      z-index: 1; pointer-events: none; opacity: 0.9;
+    }
+
     /* Animations */
     .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
     .reveal.visible { opacity: 1; transform: none; }
@@ -237,12 +240,13 @@
     @media (max-width: 900px) {
       .nav-links, #quick-nav { display: none; }
       .section-shell { padding: 32px 20px; }
-      .main-logo-img { width: 60vw; }
-      .char-king { right: 5%; bottom: -15%; width: 70vw; }
+      .game-logo-top-right { top: 90px; right: 24px; width: 100px; }
+      .char-king { right: 5%; bottom: 0%; width: 70vw; }
       .hero-copy { left: 24px; right: 24px; bottom: 40px; }
       .grid-2 { grid-template-columns: 1fr; }
       .section-header { flex-direction: column; align-items: flex-start; }
       .top-3-grid { grid-template-columns: 1fr; }
+      .char-sub3-footer { width: 120px; right: 10px; bottom: 10px; }
     }
     @media (max-width: 760px) {
       .grid-4, .grid-3, .grid-2 { display: flex !important; flex-direction: column; width: 100%; }
@@ -306,10 +310,9 @@
       <img src="https://imgur.com/DWUTa3Y.png" class="char-king" alt="King">
       <img src="https://imgur.com/qK3UjsH.png" class="char-sub1" alt="Sub 1">
       <img src="https://imgur.com/qWNwFVg.png" class="char-sub2" alt="Sub 2">
-      <img src="https://imgur.com/poECL6O.png" class="char-sub3" alt="Sub 3">
     </div>
     
-    <img src="https://imgur.com/6xVELW0.png" class="main-logo-img" alt="Clash Royale">
+    <img src="https://imgur.com/veV9zvc.png" class="game-logo-top-right" alt="Game Logo">
 
     <div class="hero-copy">
       <div class="hero-kicker" id="hero-date-kicker">데이터 동기화 중...</div>
@@ -529,17 +532,19 @@
 
       <!-- 4. Key Issues 섹션 -->
       <section id="issues-section" class="section-shell reveal">
-        <div class="section-header gold">
+        <img src="https://imgur.com/poECL6O.png" class="char-sub3-footer" alt="Sub 3">
+        
+        <div class="section-header gold" style="position:relative; z-index:2;">
           <div>
             <div class="section-label" style="color:var(--cr-gold);">Key Issues</div>
             <h2 class="section-title title-font">주요 여론 및 이슈 요약</h2>
           </div>
         </div>
 
-        <div class="issue-grid" id="issuesList">
+        <div class="issue-grid" id="issuesList" style="position:relative; z-index:2;">
           <!-- JS 렌더링 -->
         </div>
-        <div id="no-issues-msg" style="text-align:center; padding: 60px; color:#64748b; font-size:18px; font-weight:800; background:#ffffff; border-radius:var(--radius-2xl); border:1px solid #e2e8f0;">
+        <div id="no-issues-msg" style="position:relative; z-index:2; text-align:center; padding: 60px; color:#64748b; font-size:18px; font-weight:800; background:#ffffff; border-radius:var(--radius-2xl); border:1px solid #e2e8f0;">
           해당 월의 주요 이슈 데이터가 없습니다.
         </div>
       </section>
@@ -655,7 +660,7 @@
       pdf.save(`클래시로얄_월간리포트_${currentSelectedMonth}.pdf`);
 
       // 원래 상태로 UI 복구
-      document.getElementById('top-nav').style.display = 'flex';
+      document.getElementById('top-nav').style.display = '';
       document.getElementById('quick-nav').style.display = 'flex';
       
       tableActions.forEach(el => el.style.display = '');
@@ -774,9 +779,6 @@
           const dot = link.querySelector('.nav-dot');
           if (link.dataset.target === current) dot.classList.add('active'); else dot.classList.remove('active');
         });
-        
-        const topNav = document.getElementById('top-nav');
-        if (window.scrollY > 200) topNav.classList.add('show'); else topNav.classList.remove('show');
       });
 
       document.getElementById('videoMoreBtn')?.addEventListener('click', () => { 
