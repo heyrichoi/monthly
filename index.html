@@ -288,6 +288,33 @@
     .pdf-export-mode .video-title { -webkit-line-clamp: 2 !important; }
     .pdf-export-mode .url-btn { display: none !important; }
 
+    /* Key Issues PDF: split into 2 issue cards per page to prevent clipping */
+    .pdf-export-mode .pdf-issue-page .section-header { margin-bottom: 24px !important; }
+    .pdf-export-mode .pdf-issue-page .issue-grid {
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+      gap: 18px !important;
+      align-content: start !important;
+    }
+    .pdf-export-mode .pdf-issue-page .issue-card {
+      padding: 24px 28px !important;
+      box-shadow: none !important;
+      break-inside: avoid !important;
+      page-break-inside: avoid !important;
+    }
+    .pdf-export-mode .pdf-issue-page .issue-topic {
+      font-size: 21px !important;
+      margin: 0 0 8px !important;
+    }
+    .pdf-export-mode .pdf-issue-page .issue-keyword {
+      font-size: 12px !important;
+      margin-bottom: 12px !important;
+    }
+    .pdf-export-mode .pdf-issue-page .issue-summary {
+      font-size: 14px !important;
+      line-height: 1.55 !important;
+    }
+
     /* Responsive */
     @media (max-width: 1200px) { .grid-4 { grid-template-columns: repeat(2, 1fr); } .grid-3 { grid-template-columns: 1fr; } .top-3-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 900px) {
@@ -895,6 +922,13 @@
         "조회수": "Views",
         "좋아요": "Likes",
         "댓글": "Comments",
+        "조회수 합계": "Total Views",
+        "좋아요 합계": "Total Likes",
+        "댓글 합계": "Total Comments",
+        "주제": "Topic",
+        "메인 키워드": "Main Keyword",
+        "요약": "Summary",
+        "요약(영문)": "Summary (EN)",
         "더보기": "Show More",
         "접기": "Show Less",
         "크리에이터 영상 동향": "Creator Video Trends",
@@ -992,6 +1026,47 @@
       return str; // 번역이 없으면 원문 반환
     }
 
+    function pickLangText(koValue, enValue) {
+      const ko = String(koValue || '').trim();
+      const en = String(enValue || '').trim();
+      if (currentLang === 'en') return en || t(ko);
+      return ko;
+    }
+
+    function getIssueValue(issue, keys) {
+      if (!issue || Array.isArray(issue)) return '';
+      for (const key of keys) {
+        if (Object.prototype.hasOwnProperty.call(issue, key) && String(issue[key] || '').trim()) {
+          return issue[key];
+        }
+      }
+      return '';
+    }
+
+    function normalizeIssueItem(issue) {
+      // Google Sheet Key Issues column order:
+      // 주제 / topicEn / 메인 키워드 / keywordEn / 요약 / summaryEn
+      if (Array.isArray(issue)) {
+        return {
+          topic: issue[0] || '',
+          topicEn: issue[1] || '',
+          keyword: issue[2] || '',
+          keywordEn: issue[3] || '',
+          summary: issue[4] || '',
+          summaryEn: issue[5] || ''
+        };
+      }
+
+      return {
+        topic: getIssueValue(issue, ['topic', '주제', 'subject']),
+        topicEn: getIssueValue(issue, ['topicEn', 'topicEN', 'topicEnglish', 'topic_en', 'topic_eng', 'TopicEN', 'Topic En']),
+        keyword: getIssueValue(issue, ['keyword', 'mainKeyword', 'main_keyword', '메인 키워드', '메인키워드']),
+        keywordEn: getIssueValue(issue, ['keywordEn', 'keywordEN', 'keywordEnglish', 'keyword_en', 'keyword_eng', 'mainKeywordEn', 'mainKeywordEN', 'mainKeywordEnglish', 'main_keyword_en', 'KeywordEN', 'Keyword En']),
+        summary: getIssueValue(issue, ['summary', '요약']),
+        summaryEn: getIssueValue(issue, ['summaryEn', 'summaryEN', 'summaryEnglish', 'summary_en', 'summary_eng', 'SummaryEN', 'Summary En'])
+      };
+    }
+
     // --- HTML 문서로 내보내기 (정적인 오프라인용 스냅샷) ---
     async function exportHTML() {
       if (!currentSelectedMonth) {
@@ -1086,6 +1161,7 @@
         { id: 'creator-section-2', bg: '#f8fafc' },
         { id: 'creator-section-3', bg: '#f8fafc' }
       ];
+      const tempIssueSections = [];
 
       if (document.getElementById('instagram-section').style.display !== 'none') {
         sectionsToCapture.push({ id: 'instagram-section', bg: '#f8fafc' });
@@ -1095,7 +1171,44 @@
         sectionsToCapture.push({ id: 'tiktok-section', bg: '#f8fafc' });
         sectionsToCapture.push({ id: 'tiktok-section-2', bg: '#f8fafc' });
       }
-      sectionsToCapture.push({ id: 'issues-section', bg: '#f8fafc' });
+      // Key Issues는 PDF에서 카드 2개씩 별도 페이지로 분리해 하단 잘림을 방지합니다.
+      const issueSection = document.getElementById('issues-section');
+      const issueCards = issueSection ? Array.from(issueSection.querySelectorAll('#issuesList .issue-card')) : [];
+      if (issueSection && issueCards.length > 2) {
+        const chunkSize = 2;
+        for (let start = 0; start < issueCards.length; start += chunkSize) {
+          const pageNo = Math.floor(start / chunkSize) + 1;
+          const clone = issueSection.cloneNode(true);
+          clone.id = `issues-section-pdf-${pageNo}`;
+          clone.classList.remove('reveal');
+          clone.classList.add('pdf-issue-page');
+          clone.style.opacity = '1';
+          clone.style.transform = 'none';
+          clone.style.transition = 'none';
+
+          const cloneList = clone.querySelector('#issuesList');
+          if (cloneList) {
+            cloneList.id = `issuesList-pdf-${pageNo}`;
+            cloneList.innerHTML = '';
+            issueCards.slice(start, start + chunkSize).forEach(card => {
+              cloneList.appendChild(card.cloneNode(true));
+            });
+            cloneList.style.display = 'grid';
+          }
+
+          const cloneNoIssuesMsg = clone.querySelector('#no-issues-msg');
+          if (cloneNoIssuesMsg) {
+            cloneNoIssuesMsg.id = `no-issues-msg-pdf-${pageNo}`;
+            cloneNoIssuesMsg.style.display = 'none';
+          }
+
+          issueSection.parentNode.insertBefore(clone, issueSection.nextSibling);
+          tempIssueSections.push(clone);
+          sectionsToCapture.push({ id: clone.id, bg: '#f8fafc', issuePage: true });
+        }
+      } else {
+        sectionsToCapture.push({ id: 'issues-section', bg: '#f8fafc', issuePage: true });
+      }
 
       const overlay = document.getElementById('loading-overlay');
       const originalText = overlay.querySelector('.loading-text').textContent;
@@ -1143,9 +1256,9 @@
           if (sec.id !== 'hero') {
             el.style.display = 'flex';
             el.style.flexDirection = 'column';
-            el.style.justifyContent = 'center';
+            el.style.justifyContent = sec.issuePage ? 'flex-start' : 'center';
             el.style.margin = '0 auto';
-            el.style.padding = '50px 60px'; 
+            el.style.padding = sec.issuePage ? '44px 60px' : '50px 60px'; 
           } else {
             el.style.width = '1440px';
             el.style.height = '1018px';
@@ -1223,6 +1336,7 @@
         item.el.style.boxSizing = item.boxSizing;
         item.el.style.overflow = item.overflow;
       });
+      tempIssueSections.forEach(el => el.remove());
 
       document.querySelectorAll('.reveal').forEach(el => {
         el.style.transition = ''; 
@@ -1609,15 +1723,18 @@
         issuesList.style.display = 'grid';
         if (noIssuesMsg) noIssuesMsg.style.display = 'none';
         issuesList.innerHTML = issueData.map(issue => {
-          // 영어로 선택된 상태에서 영문 요약이 존재하면 그것을 사용, 비어있으면 원문(국문 요약) 사용
-          let displaySummary = issue.summary; 
-          if (currentLang === 'en') {
-             displaySummary = issue.summaryEn ? issue.summaryEn : issue.summary;
-          }
+          const normalizedIssue = normalizeIssueItem(issue);
+
+          // EN 모드에서는 시트의 topicEn / keywordEn / summaryEn을 우선 사용
+          // 값이 비어 있으면 국문 값 또는 Words 탭 번역값으로 fallback
+          const displayTopic = pickLangText(normalizedIssue.topic, normalizedIssue.topicEn);
+          const displayKeyword = pickLangText(normalizedIssue.keyword, normalizedIssue.keywordEn);
+          const displaySummary = pickLangText(normalizedIssue.summary, normalizedIssue.summaryEn);
+
           return `
           <div class="issue-card">
-            <h3 class="issue-topic">${t(issue.topic)}</h3>
-            <span class="issue-keyword">${t(issue.keyword)}</span>
+            <h3 class="issue-topic">${displayTopic}</h3>
+            <span class="issue-keyword">${displayKeyword}</span>
             <p class="issue-summary">${displaySummary}</p>
           </div>
           `;
