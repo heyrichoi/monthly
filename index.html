@@ -171,6 +171,31 @@
     .metric-mini { font-size: 15px; font-weight: 800; color: #64748b; margin-bottom: 12px; display: block; }
     .metric-big { font-size: clamp(32px, 4vw, 46px); font-weight: 900; color: #0f172a; line-height: 1; margin-bottom: 8px;}
     .metric-sub { font-size: 13px; font-weight: 700; color: #64748b; padding: 4px 10px; background: #f1f5f9; border-radius: 8px; border: 1px solid #e2e8f0; display: inline-block; }
+
+    .comparison-tabs { display: inline-flex; gap: 8px; padding: 6px; background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 999px; margin-bottom: 24px; }
+    .comparison-tab-btn { border: 0; background: transparent; color: #64748b; font-size: 13px; font-weight: 900; padding: 10px 18px; border-radius: 999px; cursor: pointer; transition: all .2s ease; }
+    .comparison-tab-btn.active { background: #0f172a; color: #ffffff; box-shadow: 0 8px 16px rgba(15,23,42,.14); }
+    .comparison-pane.hidden { display: none !important; }
+    .comparison-controls { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; }
+    .select-soft { min-width: 180px; background: #ffffff; border: 1px solid #cbd5e1; color: #0f172a; border-radius: 14px; padding: 11px 14px; font-size: 14px; font-weight: 900; outline: none; cursor: pointer; }
+
+    .metric-sub-tabs { display:inline-flex; flex-wrap:wrap; gap:8px; padding:6px; background:#f1f5f9; border:1px solid #e2e8f0; border-radius:999px; margin: 0 0 20px; }
+    .metric-sub-tab-btn { border:0; background:transparent; color:#64748b; font-size:13px; font-weight:900; padding:10px 18px; border-radius:999px; cursor:pointer; transition:all .2s ease; }
+    .metric-sub-tab-btn.active { background:#0f172a; color:#ffffff; box-shadow:0 8px 16px rgba(15,23,42,.14); }
+    .metric-tab-pane { margin-top: 8px; }
+    .metric-tab-pane-title { margin: 0 0 12px; font-size: 18px; font-weight: 900; color:#0f172a; }
+    .compact-metric-table table { min-width: 0 !important; table-layout: fixed; }
+    .compact-metric-table th, .compact-metric-table td { white-space: normal; }
+    .pdf-export-mode .metric-sub-tabs { display:none !important; }
+    .pdf-export-mode .metric-tab-pane.hidden { display:block !important; }
+    .pdf-export-mode .metric-tab-pane { margin-bottom: 18px !important; }
+    .pdf-export-mode .metric-tab-pane-title { display:block !important; font-size: 17px !important; margin: 0 0 8px !important; }
+    .compare-vs { font-size: 13px; font-weight: 900; color: #64748b; padding: 0 2px; }
+    .period-summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+    .period-mini-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 18px; padding: 20px; }
+    .period-mini-card .label { font-size: 12px; font-weight: 900; color: #64748b; margin-bottom: 8px; }
+    .period-mini-card .value { font-size: 26px; font-weight: 900; color: #0f172a; line-height: 1; }
+    .weekly-note { margin-top: 10px; font-size: 12px; color: #64748b; text-align: right; font-weight: 700; }
     
     .kpi-diff { font-size: 13px; font-weight: 800; display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 99px; margin-top: 8px;}
     .diff-up { color: #16a34a; background: #dcfce7; border: 1px solid #bbf7d0; }
@@ -315,15 +340,51 @@
       line-height: 1.55 !important;
     }
 
+
+
+    /* Wide table / PDF fixes */
+    .pdf-export-mode #youtube-manual-summary-section .table-scroll,
+    .pdf-export-mode #youtube-upload-metrics-section .table-scroll {
+      overflow: visible !important;
+    }
+    .pdf-export-mode #youtube-manual-summary-section .table-scroll table,
+    .pdf-export-mode #youtube-upload-metrics-section .table-scroll table {
+      min-width: 0 !important;
+      width: 100% !important;
+      table-layout: fixed !important;
+    }
+    .pdf-export-mode #youtube-manual-summary-section th,
+    .pdf-export-mode #youtube-manual-summary-section td,
+    .pdf-export-mode #youtube-upload-metrics-section th,
+    .pdf-export-mode #youtube-upload-metrics-section td {
+      min-width: 0 !important;
+      white-space: normal !important;
+      word-break: keep-all !important;
+      padding: 6px 5px !important;
+      font-size: 10px !important;
+      line-height: 1.25 !important;
+    }
+    .pdf-export-mode #youtube-manual-summary-section .num-font,
+    .pdf-export-mode #youtube-upload-metrics-section .num-font {
+      font-size: 11px !important;
+      line-height: 1.2 !important;
+    }
+    .pdf-export-mode #youtube-manual-summary-section .creator-diff-span,
+    .pdf-export-mode #youtube-upload-metrics-section .creator-diff-span {
+      font-size: 9px !important;
+      line-height: 1.2 !important;
+    }
+
     /* Responsive */
     @media (max-width: 1200px) { .grid-4 { grid-template-columns: repeat(2, 1fr); } .grid-3 { grid-template-columns: 1fr; } .top-3-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 900px) {
       .nav-links, #quick-nav { display: none; } .section-shell { padding: 32px 20px; } .game-logo-top-right { top: 90px; right: 24px; width: 100px; }
       .hero-copy { left: 24px; right: 24px; bottom: 40px; } .grid-2 { grid-template-columns: 1fr; } .section-header { flex-direction: column; align-items: flex-start; }
       .top-3-grid { grid-template-columns: 1fr; } 
+      .period-summary-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 760px) {
-      .grid-4, .grid-3, .grid-2 { display: flex !important; flex-direction: column; width: 100%; } .stack { padding:40px 14px 30px; gap: 20px; }
+      .grid-4, .grid-3, .grid-2, .period-summary-grid { display: flex !important; flex-direction: column; width: 100%; } .stack { padding:40px 14px 30px; gap: 20px; }
       .top-nav-inner { padding:0 14px; } .glass-card { padding:16px; } .chart-box { height: 240px; } .hero-copy { left:14px; right:14px; bottom: 40px; width:calc(100% - 28px); }
       .hero-title { font-size:clamp(32px,10vw,60px); line-height:1; } .section-heading { flex-direction: column; align-items: flex-start; gap: 8px; } th, td { padding: 10px 8px; font-size: 12px; }
     }
@@ -355,6 +416,7 @@
         <a href="#sensor-section" data-i18n>센서타워</a>
         <a href="#cafe-section" data-i18n>네이버 카페</a>
         <a href="#youtube-section" data-i18n>유튜브</a>
+        <a href="#comparison-section" data-i18n>기간 비교</a>
         <a href="#creator-section-1" data-i18n>크리에이터</a>
         <a href="#instagram-section" id="nav-instagram" style="display:none;" data-i18n>인스타그램</a>
         <a href="#tiktok-section" id="nav-tiktok" style="display:none;" data-i18n>틱톡</a>
@@ -385,6 +447,7 @@
     <a href="#sensor-section" class="quick-link" data-target="sensor-section"><span class="label" data-i18n>센서타워</span><div class="nav-dot"></div></a>
     <a href="#cafe-section" class="quick-link" data-target="cafe-section"><span class="label" data-i18n>네이버 카페</span><div class="nav-dot"></div></a>
     <a href="#youtube-section" class="quick-link" data-target="youtube-section"><span class="label" data-i18n>유튜브 데이터</span><div class="nav-dot"></div></a>
+    <a href="#comparison-section" class="quick-link" data-target="comparison-section"><span class="label" data-i18n>기간 비교</span><div class="nav-dot"></div></a>
     <a href="#creator-section-1" class="quick-link" data-target="creator-section-1"><span class="label" data-i18n>크리에이터</span><div class="nav-dot"></div></a>
     <a href="#instagram-section" class="quick-link" data-target="instagram-section" id="quick-nav-instagram" style="display:none;"><span class="label" data-i18n>인스타그램</span><div class="nav-dot"></div></a>
     <a href="#tiktok-section" class="quick-link" data-target="tiktok-section" id="quick-nav-tiktok" style="display:none;"><span class="label" data-i18n>틱톡</span><div class="nav-dot"></div></a>
@@ -434,6 +497,11 @@
 
         <div class="grid-4" style="margin-bottom: 24px;">
           <div class="glass-card" style="grid-column: span 1;">
+            <span class="metric-mini" data-i18n>월간 총 DAU</span>
+            <div class="metric-big num-font"><span class="counter" id="sensor-total-dau" data-target="0">0</span></div>
+            <div id="diff-sensor-total-dau"></div>
+          </div>
+          <div class="glass-card" style="grid-column: span 1;">
             <span class="metric-mini" data-i18n>월간 평균 DAU</span>
             <div class="metric-big num-font"><span class="counter" id="sensor-dau" data-target="0">0</span></div>
             <div id="diff-sensor-dau"></div>
@@ -482,6 +550,40 @@
         </div>
       </section>
 
+      <!-- 2-1. 네이버 카페 상세 데이터 -->
+      <section id="cafe-detail-section" class="section-shell reveal">
+        <div class="section-header">
+          <div>
+            <div class="section-label">Community Detail</div>
+            <h2 class="section-title title-font" data-i18n>네이버 카페 상세 데이터</h2>
+          </div>
+        </div>
+        <div class="glass-card" style="margin-bottom:0;">
+          <h3 style="margin:0 0 16px; font-size:20px; color:#0f172a;" data-i18n>최근 3개월 네이버 카페 지표</h3>
+          <div style="font-size: 13px; color:#64748b; margin-bottom:16px; font-weight:700;" data-i18n>* 네이버 카페 (수동 입력) 탭 기준입니다. 원본 시트의 연령 데이터와 활동 지표를 나누어 표시합니다.</div>
+          <div class="metric-sub-tabs hide-on-pdf" data-metric-tab-group="cafe-detail">
+            <button type="button" class="metric-sub-tab-btn active" data-metric-tab-target="cafe-detail-age" data-i18n>연령</button>
+            <button type="button" class="metric-sub-tab-btn" data-metric-tab-target="cafe-detail-activity" data-i18n>활동 지표</button>
+          </div>
+
+          <div id="cafe-detail-age" class="metric-tab-pane" data-metric-tab-group="cafe-detail">
+            <div class="metric-tab-pane-title" data-i18n>연령별 방문자</div>
+            <div class="table-shell compact-metric-table"><div class="table-scroll"><table>
+              <thead><tr><th style="text-align:center;" data-i18n>기간</th><th style="text-align:right;" data-i18n>전 연령</th><th style="text-align:right;" data-i18n>10대</th><th style="text-align:right;" data-i18n>20대</th><th style="text-align:right;" data-i18n>30대</th><th style="text-align:right;" data-i18n>40대 이상</th></tr></thead>
+              <tbody id="cafeAgeDetailBody"></tbody>
+            </table></div></div>
+          </div>
+
+          <div id="cafe-detail-activity" class="metric-tab-pane hidden" data-metric-tab-group="cafe-detail">
+            <div class="metric-tab-pane-title" data-i18n>활동 지표</div>
+            <div class="table-shell compact-metric-table"><div class="table-scroll"><table>
+              <thead><tr><th style="text-align:center;" data-i18n>기간</th><th style="text-align:right;" data-i18n>방문 횟수</th><th style="text-align:right;" data-i18n>게시글 수</th><th style="text-align:right;" data-i18n>댓글 수</th><th style="text-align:right;" data-i18n>신규 가입자 수</th></tr></thead>
+              <tbody id="cafeActivityDetailBody"></tbody>
+            </table></div></div>
+          </div>
+        </div>
+      </section>
+
       <!-- 2-2. 네이버 카페 섹션 (Part 2: 차트) -->
       <section id="cafe-section-2" class="section-shell reveal">
         <div class="section-header">
@@ -514,16 +616,68 @@
         </div>
       </section>
 
+      <!-- 3-1-1. 유튜브 섹션 (Part 1-1: 수동 입력 최근 3개월 표) -->
+      <section id="youtube-manual-summary-section" class="section-shell reveal">
+        <div class="section-header red">
+          <div>
+            <div class="section-label" style="color:var(--cr-red);">YouTube Manual Input</div>
+            <h2 class="section-title title-font" data-i18n>유튜브 당월 전체 데이터</h2>
+          </div>
+        </div>
+        <div class="glass-card" style="margin-bottom: 0;">
+          <h3 style="margin:0 0 16px; font-size:20px; color:#0f172a;" data-i18n>최근 3개월 공식 유튜브 전체 지표</h3>
+          <div style="font-size: 13px; color:#64748b; margin-bottom:16px; font-weight:700;" data-i18n>* 유튜브 (수동 입력) 탭 기준입니다. 공식 유튜브 채널 전체에서 해당 월에 발생한 데이터를 표시하며, 시청자층 컬럼은 제외합니다.</div>
+          <div class="metric-sub-tabs hide-on-pdf" data-metric-tab-group="yt-manual">
+            <button type="button" class="metric-sub-tab-btn active" data-metric-tab-target="yt-manual-total" data-i18n>전체</button>
+            <button type="button" class="metric-sub-tab-btn" data-metric-tab-target="yt-manual-vod" data-i18n>VOD</button>
+            <button type="button" class="metric-sub-tab-btn" data-metric-tab-target="yt-manual-shorts" data-i18n>Shorts</button>
+            <button type="button" class="metric-sub-tab-btn" data-metric-tab-target="yt-manual-posts" data-i18n>게시물</button>
+          </div>
+
+          <div id="yt-manual-total" class="metric-tab-pane" data-metric-tab-group="yt-manual">
+            <div class="metric-tab-pane-title" data-i18n>전체 조회수</div>
+            <div class="table-shell compact-metric-table"><div class="table-scroll"><table>
+              <thead><tr><th style="text-align:center;" data-i18n>기간</th><th style="text-align:right;" data-i18n>총합 조회수</th></tr></thead>
+              <tbody id="youtubeManualTotalBody"></tbody>
+            </table></div></div>
+          </div>
+
+          <div id="yt-manual-vod" class="metric-tab-pane hidden" data-metric-tab-group="yt-manual">
+            <div class="metric-tab-pane-title" data-i18n>VOD 지표</div>
+            <div class="table-shell compact-metric-table"><div class="table-scroll"><table>
+              <thead><tr><th style="text-align:center;" data-i18n>기간</th><th style="text-align:right;" data-i18n>조회수</th><th style="text-align:right;" data-i18n>노출수</th><th style="text-align:right;" data-i18n>CTR</th><th style="text-align:right;" data-i18n>평균 시청</th></tr></thead>
+              <tbody id="youtubeManualVodBody"></tbody>
+            </table></div></div>
+          </div>
+
+          <div id="yt-manual-shorts" class="metric-tab-pane hidden" data-metric-tab-group="yt-manual">
+            <div class="metric-tab-pane-title" data-i18n>Shorts 지표</div>
+            <div class="table-shell compact-metric-table"><div class="table-scroll"><table>
+              <thead><tr><th style="text-align:center;" data-i18n>기간</th><th style="text-align:right;" data-i18n>조회수</th><th style="text-align:right;" data-i18n>유효 조회수</th><th style="text-align:right;" data-i18n>좋아요</th><th style="text-align:right;" data-i18n>구독자</th></tr></thead>
+              <tbody id="youtubeManualShortsBody"></tbody>
+            </table></div></div>
+          </div>
+
+          <div id="yt-manual-posts" class="metric-tab-pane hidden" data-metric-tab-group="yt-manual">
+            <div class="metric-tab-pane-title" data-i18n>게시물 지표</div>
+            <div class="table-shell compact-metric-table"><div class="table-scroll"><table>
+              <thead><tr><th style="text-align:center;" data-i18n>기간</th><th style="text-align:right;" data-i18n>노출수</th><th style="text-align:right;" data-i18n>좋아요</th><th style="text-align:right;" data-i18n>구독자</th></tr></thead>
+              <tbody id="youtubeManualPostsBody"></tbody>
+            </table></div></div>
+          </div>
+        </div>
+      </section>
+
       <!-- 3-1-2. 유튜브 섹션 (Part 1-2: 성과 요약) -->
       <section id="youtube-section-1-2" class="section-shell reveal">
         <div class="section-header red">
           <div>
             <div class="section-label" style="color:var(--cr-red);">YouTube Metrics</div>
-            <h2 class="section-title title-font" data-i18n>영상 및 게시물 성과</h2>
+            <h2 class="section-title title-font" data-i18n>유튜브 당월 전체 데이터</h2>
           </div>
         </div>
 
-        <h3 style="font-size: 24px; margin-bottom: 20px; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; color:#0f172a;" data-i18n>▶ 영상 성과 (VOD & Shorts)</h3>
+        <h3 style="font-size: 24px; margin-bottom: 20px; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; color:#0f172a;" data-i18n>▶ 당월 전체 영상 성과 (VOD & Shorts)</h3>
         <div class="grid-4" style="margin-bottom: 40px;">
           <div class="glass-card">
             <span class="metric-mini" data-i18n>VOD 조회수</span>
@@ -550,7 +704,7 @@
           </div>
         </div>
 
-        <h3 style="font-size: 24px; margin-bottom: 20px; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; color:#0f172a;" data-i18n>💬 커뮤니티 게시물 성과</h3>
+        <h3 style="font-size: 24px; margin-bottom: 20px; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; color:#0f172a;" data-i18n>💬 당월 전체 커뮤니티 게시물 성과</h3>
         <div class="grid-3" style="margin-bottom: 0;">
           <div class="glass-card">
             <span class="metric-mini" data-i18n>게시물 노출수</span>
@@ -565,6 +719,49 @@
           <div class="glass-card">
             <span class="metric-mini" data-i18n>구독자 유입 (커뮤니티)</span>
             <div class="metric-big num-font"><span class="counter" id="yt-c-subs" data-target="0">0</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3-1-3. 유튜브 섹션 (Part 1-3: 당월 업로드 콘텐츠 데이터) -->
+      <section id="youtube-upload-metrics-section" class="section-shell reveal">
+        <div class="section-header red">
+          <div>
+            <div class="section-label" style="color:var(--cr-red);">YouTube Uploaded Contents</div>
+            <h2 class="section-title title-font" data-i18n>유튜브 당월 업로드 콘텐츠 데이터</h2>
+          </div>
+        </div>
+        <div class="glass-card" style="margin-bottom: 0;">
+          <h3 style="margin:0 0 16px; font-size:20px; color:#0f172a;" data-i18n>최근 3개월 당월 업로드 콘텐츠 지표</h3>
+          <div style="font-size: 13px; color:#64748b; margin-bottom:16px; font-weight:700;" data-i18n>* 유튜브 지표 탭 기준입니다. 해당 월에 업로드된 콘텐츠가 현재까지 만든 성과를 표시하며, 각 값 아래에는 직전 월 대비 증감률을 함께 표시합니다.</div>
+          <div class="metric-sub-tabs hide-on-pdf" data-metric-tab-group="yt-upload">
+            <button type="button" class="metric-sub-tab-btn active" data-metric-tab-target="yt-upload-total" data-i18n>전체</button>
+            <button type="button" class="metric-sub-tab-btn" data-metric-tab-target="yt-upload-vod" data-i18n>VOD</button>
+            <button type="button" class="metric-sub-tab-btn" data-metric-tab-target="yt-upload-shorts" data-i18n>Shorts</button>
+          </div>
+
+          <div id="yt-upload-total" class="metric-tab-pane" data-metric-tab-group="yt-upload">
+            <div class="metric-tab-pane-title" data-i18n>전체/구독자 지표</div>
+            <div class="table-shell compact-metric-table"><div class="table-scroll"><table>
+              <thead><tr><th style="text-align:center;" data-i18n>기간</th><th style="text-align:right;" data-i18n>구독자 수</th><th style="text-align:right;" data-i18n>전달 비교 +/-</th><th style="text-align:right;" data-i18n>합계 조회수</th><th style="text-align:right;" data-i18n>합계 좋아요</th><th style="text-align:right;" data-i18n>합계 업로드 수</th></tr></thead>
+              <tbody id="youtubeUploadTotalBody"></tbody>
+            </table></div></div>
+          </div>
+
+          <div id="yt-upload-vod" class="metric-tab-pane hidden" data-metric-tab-group="yt-upload">
+            <div class="metric-tab-pane-title" data-i18n>VOD 지표</div>
+            <div class="table-shell compact-metric-table"><div class="table-scroll"><table>
+              <thead><tr><th style="text-align:center;" data-i18n>기간</th><th style="text-align:right;" data-i18n>조회수</th><th style="text-align:right;" data-i18n>좋아요</th><th style="text-align:right;" data-i18n>업로드 수</th></tr></thead>
+              <tbody id="youtubeUploadVodBody"></tbody>
+            </table></div></div>
+          </div>
+
+          <div id="yt-upload-shorts" class="metric-tab-pane hidden" data-metric-tab-group="yt-upload">
+            <div class="metric-tab-pane-title" data-i18n>Shorts 지표</div>
+            <div class="table-shell compact-metric-table"><div class="table-scroll"><table>
+              <thead><tr><th style="text-align:center;" data-i18n>기간</th><th style="text-align:right;" data-i18n>조회수</th><th style="text-align:right;" data-i18n>좋아요</th><th style="text-align:right;" data-i18n>업로드 수</th></tr></thead>
+              <tbody id="youtubeUploadShortsBody"></tbody>
+            </table></div></div>
           </div>
         </div>
       </section>
@@ -607,6 +804,7 @@
             <h2 class="section-title title-font" data-i18n>월간 영상 상세 데이터</h2>
           </div>
         </div>
+        <div id="youtubeUploadDetailSummary" style="margin-bottom:24px;"></div>
         <div class="table-shell" style="margin-bottom:24px;">
           <div class="table-scroll">
             <table>
@@ -626,6 +824,97 @@
         </div>
         <div class="table-actions hide-on-pdf" style="margin-bottom: 0;">
           <button id="videoMoreBtn" class="more-btn" type="button" data-i18n>더보기</button>
+        </div>
+      </section>
+
+
+
+      <!-- 3-4. 유튜브 주별 성과 요약 -->
+      <section id="youtube-weekly-section" class="section-shell reveal">
+        <div class="section-header red">
+          <div>
+            <div class="section-label" style="color:var(--cr-red);">Weekly YouTube Summary</div>
+            <h2 class="section-title title-font" data-i18n>유튜브 주별 성과 요약</h2>
+          </div>
+        </div>
+        <div class="table-shell" style="margin-bottom: 0;">
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th style="text-align:center;" data-i18n>주차</th>
+                  <th style="text-align:right;" data-i18n>조회수 합계</th>
+                  <th style="text-align:right;" data-i18n>시청 시간 합계</th>
+                  <th style="text-align:right;" data-i18n>업로드 수</th>
+                </tr>
+              </thead>
+              <tbody id="weeklyStatsBody"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="weekly-note" data-i18n>* 유튜브 영상 상세 데이터 탭의 해당 월 데이터를 기준으로 주차별 합계를 계산합니다.</div>
+      </section>
+
+      <!-- 3-5. 연도/분기 비교 통계 -->
+      <section id="comparison-section" class="section-shell reveal">
+        <div class="section-header black">
+          <div>
+            <div class="section-label" style="color:var(--cr-black);">Period Comparison</div>
+            <h2 class="section-title title-font" data-i18n>기간별 데이터 비교</h2>
+          </div>
+        </div>
+
+        <div class="comparison-tabs hide-on-pdf">
+          <button type="button" class="comparison-tab-btn active" data-compare-tab="year" data-i18n>연도 vs 연도</button>
+          <button type="button" class="comparison-tab-btn" data-compare-tab="quarter" data-i18n>분기 vs 분기</button>
+        </div>
+
+        <div id="year-compare-pane" class="comparison-pane">
+          <div class="comparison-controls hide-on-pdf">
+            <select id="yearCompareA" class="select-soft"></select>
+            <span class="compare-vs">VS</span>
+            <select id="yearCompareB" class="select-soft"></select>
+          </div>
+          <div class="period-summary-grid" id="yearSummaryCards"></div>
+          <div class="table-shell">
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th data-i18n>지표</th>
+                    <th style="text-align:right;" id="yearCompareAHead">-</th>
+                    <th style="text-align:right;" id="yearCompareBHead">-</th>
+                    <th style="text-align:right;" data-i18n>증감</th>
+                  </tr>
+                </thead>
+                <tbody id="yearCompareBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="quarter-compare-pane" class="comparison-pane hidden">
+          <div class="comparison-controls hide-on-pdf">
+            <select id="quarterCompareA" class="select-soft"></select>
+            <span class="compare-vs">VS</span>
+            <select id="quarterCompareB" class="select-soft"></select>
+          </div>
+          <div class="period-summary-grid" id="quarterSummaryCards"></div>
+          <div class="table-shell">
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th data-i18n>지표</th>
+                    <th style="text-align:right;" id="quarterCompareAHead">-</th>
+                    <th style="text-align:right;" id="quarterCompareBHead">-</th>
+                    <th style="text-align:right;" data-i18n>증감</th>
+                  </tr>
+                </thead>
+                <tbody id="quarterCompareBody"></tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -848,6 +1137,7 @@
   </div>
 
   <script>
+
     // 🚨 구글 스프레드시트 배포 URL
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyET5WjB-gNCvsPO80IIRdHc0ZnOfe6AfjGAk7lwwznkxCw8gjXxkvkWUi8Y6-PJPp7/exec"; 
 
@@ -859,6 +1149,9 @@
     let sensorChartInstance = null;
     let creatorTrendChartInstance = null;
     let currentSelectedMonth = "";
+    let comparisonInitialized = false;
+    let metricTabsInitialized = false;
+    let currentComparisonTab = 'year';
     
     let showAllVideos = false;
     let showAllCreatorVideos = false;
@@ -872,6 +1165,7 @@
         "크리에이터": "Creator",
         "인스타그램": "Instagram",
         "틱톡": "TikTok",
+        "기간 비교": "Period Compare",
         "주요 이슈": "Key Issues",
         "HTML 내보내기": "Export HTML",
         "PDF 내보내기": "Export PDF",
@@ -886,6 +1180,7 @@
         "월간 업로드": "Monthly Uploads",
         "월간 업로드 수": "Monthly Uploads",
         "센서타워 주요 지표": "Sensor Tower Key Metrics",
+        "월간 총 DAU": "Monthly Total DAU",
         "월간 평균 DAU": "Monthly Avg DAU",
         "일간 DAU 추이 및 영상 업로드 영향": "Daily DAU Trend & Video Upload Impact",
         "* 파란색 막대는 유튜브 영상이 업로드된 날짜입니다. 막대에 마우스를 올려 확인해 보세요!": "* Blue bars indicate YouTube video upload dates. Hover over them to check!",
@@ -897,9 +1192,49 @@
         "카페 연령별 방문자 분포": "Naver Cafe Visitor Demographics",
         "공식 유튜브 채널 지표": "Official YouTube Channel Metrics",
         "유튜브 월별 조회수 및 인터랙션 추이 (최근 6개월)": "YouTube Monthly Views & Interactions (Last 6 Months)",
-        "영상 및 게시물 성과": "Video & Post Performance",
-        "▶ 영상 성과 (VOD & Shorts)": "▶ Video Performance (VOD & Shorts)",
-        "▶ 영상 성과 (VOD &amp; Shorts)": "▶ Video Performance (VOD & Shorts)",
+        "유튜브 당월 전체 데이터": "YouTube Manual Input Summary",
+        "최근 3개월 공식 유튜브 전체 지표": "YouTube Manual Input Metrics (Last 3 Months)",
+        "* 유튜브 (수동 입력) 탭 기준입니다. 공식 유튜브 채널 전체에서 해당 월에 발생한 데이터를 표시하며, 시청자층 컬럼은 제외합니다.": "* Shows values from the YouTube manual input sheet excluding audience demographics, with month-over-month change under each value.",
+        "유튜브 당월 전체 데이터": "YouTube Monthly Total Data",
+        "최근 3개월 공식 유튜브 전체 지표": "Official YouTube Total Metrics (Last 3 Months)",
+        "* 유튜브 (수동 입력) 탭 기준입니다. 공식 유튜브 채널 전체에서 해당 월에 발생한 데이터를 표시하며, 시청자층 컬럼은 제외합니다.": "* Based on the YouTube manual input sheet. Shows total official YouTube channel data for the month, excluding audience demographics.",
+        "유튜브 당월 업로드 콘텐츠 데이터": "YouTube Monthly Uploaded Content Data",
+        "최근 3개월 당월 업로드 콘텐츠 지표": "Monthly Uploaded Content Metrics (Last 3 Months)",
+        "* 유튜브 지표 탭 기준입니다. 해당 월에 업로드된 콘텐츠가 현재까지 만든 성과를 표시하며, 각 값 아래에는 직전 월 대비 증감률을 함께 표시합니다.": "* Based on the YouTube metrics sheet. Shows performance generated by content uploaded in each month, with month-over-month change below each value.",
+        "전달 비교 +/-": "MoM +/-",
+        "합계 조회수": "Total Views",
+        "VOD 좋아요": "VOD Likes",
+        "합계 좋아요": "Total Likes",
+        "VOD 업로드 수": "VOD Uploads",
+        "Shorts 업로드 수": "Shorts Uploads",
+        "합계 업로드 수": "Total Uploads",
+        "▶ 당월 전체 영상 성과 (VOD & Shorts)": "▶ Monthly Total Video Performance (VOD & Shorts)",
+        "💬 당월 전체 커뮤니티 게시물 성과": "💬 Monthly Total Community Post Performance",
+        "당월 업로드 공식 영상 합계/평균": "Official Upload Totals & Averages",
+        "업로드 수": "Uploads",
+        "조회수 합계": "Total Views",
+        "좋아요 합계": "Total Likes",
+        "댓글 합계": "Total Comments",
+        "평균 조회수": "Avg. Views",
+        "평균 좋아요": "Avg. Likes",
+        "평균 댓글": "Avg. Comments",
+        "유형별 합계/평균": "Totals & Averages by Type",
+        "구분": "Type",
+        "합계": "Total",
+        "전체": "Total",
+        "이전 데이터 없음": "No previous data",
+        "전월 대비": "MoM",
+        "전월 대비 변동 없음": "No MoM change",
+        "총합 조회수": "Total Views",
+        "VOD 노출수": "VOD Impressions",
+        "VOD CTR": "VOD CTR",
+        "VOD 평균 시청": "VOD Avg. View Duration",
+        "Shorts 유효 조회수": "Shorts Viewed",
+        "Shorts 구독자": "Shorts Subscribers",
+        "게시물 구독자": "Post Subscribers",
+        "유튜브 당월 전체 데이터": "YouTube Monthly Total Data",
+        "▶ 당월 전체 영상 성과 (VOD & Shorts)": "▶ Monthly Total Video Performance (VOD & Shorts)",
+        "▶ 당월 전체 영상 성과 (VOD & Shorts)": "▶ Monthly Total Video Performance (VOD & Shorts)",
         "VOD 조회수": "VOD Views",
         "클릭률": "CTR",
         "VOD 평균 시청": "VOD Avg. View Duration",
@@ -909,13 +1244,31 @@
         "유효 조회": "Viewed",
         "Shorts 좋아요": "Shorts Likes",
         "구독자 유입": "Subscribers Gained",
-        "💬 커뮤니티 게시물 성과": "💬 Community Post Performance",
+        "💬 당월 전체 커뮤니티 게시물 성과": "💬 Community Post Performance",
         "게시물 노출수": "Post Impressions",
         "게시물 좋아요": "Post Likes",
         "구독자 유입 (커뮤니티)": "Subscribers Gained (Community)",
         "유튜브 시청자층 연령 분포": "YouTube Audience Demographics",
         "이달의 인기 영상": "Top Videos of the Month",
-        "월간 영상 상세 데이터": "Monthly Video Details",
+        "당월 업로드 공식 영상 상세 데이터": "Monthly Official Upload Details",
+        "유튜브 주별 성과 요약": "YouTube Weekly Performance Summary",
+        "주차": "Week",
+        "시청 시간 합계": "Total Watch Time",
+        "* 유튜브 영상 상세 데이터 탭의 해당 월 데이터를 기준으로 주차별 합계를 계산합니다.": "* Weekly totals are calculated from the selected month in the Manual YouTube Detail sheet.",
+        "기간별 데이터 비교": "Period Data Comparison",
+        "연도 vs 연도": "Year vs Year",
+        "분기 vs 분기": "Quarter vs Quarter",
+        "지표": "Metric",
+        "증감": "Change",
+        "평균 DAU": "Avg. DAU",
+        "총 DAU": "Total DAU",
+        "유튜브 조회수": "YouTube Views",
+        "유튜브 인터랙션": "YouTube Interactions",
+        "카페 방문": "Cafe Visits",
+        "카페 게시글": "Cafe Posts",
+        "카페 댓글": "Cafe Comments",
+        "카페 신규 가입자": "Cafe New Users",
+        "시청 시간": "Watch Time",
         "업로드 일자": "Upload Date",
         "유형": "Type",
         "영상 제목 / URL": "Video Title / URL",
@@ -1151,12 +1504,17 @@
         { id: 'hero', bg: '#0f172a' },
         { id: 'sensor-section', bg: '#f8fafc' },
         { id: 'cafe-section', bg: '#f8fafc' },
+        { id: 'cafe-detail-section', bg: '#f8fafc' },
         { id: 'cafe-section-2', bg: '#f8fafc' },
         { id: 'youtube-section', bg: '#f8fafc' },
+        { id: 'youtube-manual-summary-section', bg: '#f8fafc' },
         { id: 'youtube-section-1-2', bg: '#f8fafc' },
+        { id: 'youtube-upload-metrics-section', bg: '#f8fafc' },
         { id: 'youtube-section-2', bg: '#f8fafc' },
         { id: 'youtube-section-2-2', bg: '#f8fafc' },
         { id: 'youtube-section-3', bg: '#f8fafc' },
+        { id: 'youtube-weekly-section', bg: '#f8fafc' },
+        { id: 'comparison-section', bg: '#f8fafc' },
         { id: 'creator-section-1', bg: '#f8fafc' },
         { id: 'creator-section-2', bg: '#f8fafc' },
         { id: 'creator-section-3', bg: '#f8fafc' }
@@ -1378,17 +1736,94 @@
     }
 
     function getYoutubeVideoId(url) {
-      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-      const match = url.match(regExp);
-      return (match && match[2].length === 11) ? match[2] : null;
+      const str = String(url || '');
+      const patterns = [
+        /youtube\.com\/shorts\/([^?&#/]+)/,
+        /youtu\.be\/([^?&#/]+)/,
+        /youtube\.com\/watch\?v=([^?&#/]+)/,
+        /[?&]v=([^?&#/]+)/,
+        /youtube\.com\/embed\/([^?&#/]+)/
+      ];
+      for (const p of patterns) {
+        const match = str.match(p);
+        if (match && match[1]) return match[1];
+      }
+      return null;
+    }
+
+    function formatPercentChange(current, prev) {
+      if (prev === undefined || prev === null || safeNumber(prev) === 0) return '-';
+      const pct = ((safeNumber(current) - safeNumber(prev)) / Math.abs(safeNumber(prev))) * 100;
+      return `${pct >= 0 ? '+' : ''}${pct.toFixed(1)}%`;
     }
 
     function formatDiffHTML(cur, prev) {
-      if (!prev && prev !== 0) return `<span class="creator-diff-span c-diff-none">(-)</span>`;
-      const diff = cur - prev;
-      if (diff > 0) return `<span class="creator-diff-span c-diff-up">(▲${formatNumber(diff)})</span>`;
-      if (diff < 0) return `<span class="creator-diff-span c-diff-down">(▼${formatNumber(Math.abs(diff))})</span>`;
+      if (prev === undefined || prev === null) return `<span class="creator-diff-span c-diff-none">(-)</span>`;
+      const diff = safeNumber(cur) - safeNumber(prev);
+      const pct = formatPercentChange(cur, prev);
+      if (diff > 0) return `<span class="creator-diff-span c-diff-up">(▲${formatNumber(diff)} / ${pct})</span>`;
+      if (diff < 0) return `<span class="creator-diff-span c-diff-down">(▼${formatNumber(Math.abs(diff))} / ${pct})</span>`;
       return `<span class="creator-diff-span c-diff-none">(-)</span>`;
+    }
+
+    function getYoutubeTotalViews(yt) {
+      if (!yt) return 0;
+      const total = safeNumber(yt.totalViews);
+      if (total > 0) return total;
+      return safeNumber(yt.vViews) + safeNumber(yt.sViews);
+    }
+
+    function parsePercentValue(value) {
+      if (typeof value === 'number') return value <= 1 ? value * 100 : value;
+      return Number(String(value || '').replace('%', '').replace(/,/g, '').trim()) || 0;
+    }
+
+    function parseDurationSeconds(value) {
+      if (typeof value === 'number') return value;
+      if (!value) return 0;
+      const parts = String(value).trim().split(':').map(v => Number(v) || 0);
+      if (parts.length === 3) return parts[0] * 3600 + parts[1] * 60 + parts[2];
+      if (parts.length === 2) return parts[0] * 60 + parts[1];
+      return safeNumber(value);
+    }
+
+    function formatDurationSeconds(seconds) {
+      const total = Math.round(Math.abs(safeNumber(seconds)));
+      const h = Math.floor(total / 3600);
+      const m = Math.floor((total % 3600) / 60);
+      const sec = total % 60;
+      if (h > 0) return `${h}:${String(m).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+      return `${m}:${String(sec).padStart(2, '0')}`;
+    }
+
+    function manualMetricNumericValue(value, type) {
+      if (type === 'percent') return parsePercentValue(value);
+      if (type === 'duration') return parseDurationSeconds(value);
+      return safeNumber(value);
+    }
+
+    function formatManualMetricValue(value, type) {
+      if (type === 'percent') return `${parsePercentValue(value).toFixed(1)}%`;
+      if (type === 'duration') return fixTimeFormat(value || '0:00');
+      return formatNumber(Math.round(safeNumber(value)));
+    }
+
+    function formatManualMetricDiff(current, prev, type) {
+      if (prev === undefined || prev === null) return `<span class="creator-diff-span c-diff-none">(-)</span>`;
+      const curVal = manualMetricNumericValue(current, type);
+      const prevVal = manualMetricNumericValue(prev, type);
+      if (prevVal === 0 && curVal === 0) return `<span class="creator-diff-span c-diff-none">(-)</span>`;
+
+      const diff = curVal - prevVal;
+      const pct = prevVal === 0 ? '-' : `${diff >= 0 ? '+' : ''}${((diff / Math.abs(prevVal)) * 100).toFixed(1)}%`;
+      let diffText = '';
+      if (type === 'percent') diffText = `${Math.abs(diff).toFixed(1)}%p`;
+      else if (type === 'duration') diffText = formatDurationSeconds(Math.abs(diff));
+      else diffText = formatNumber(Math.round(Math.abs(diff)));
+
+      if (diff > 0) return `<span class="creator-diff-span c-diff-up">▲${diffText} (${pct})</span>`;
+      if (diff < 0) return `<span class="creator-diff-span c-diff-down">▼${diffText} (${pct})</span>`;
+      return `<span class="creator-diff-span c-diff-none">0 (0.0%)</span>`;
     }
 
     function renderDiff(current, prev, elementId) {
@@ -1398,13 +1833,14 @@
         el.innerHTML = `<span class="metric-sub" style="color:#64748b;">${t('이전 데이터 없음')}</span>`;
         return;
       }
-      const diff = current - prev;
+      const diff = safeNumber(current) - safeNumber(prev);
+      const pct = formatPercentChange(current, prev);
       if (diff > 0) {
-        el.innerHTML = `<span class="kpi-diff diff-up">${t('전월 대비')} ▲ ${formatNumber(diff)}</span>`;
+        el.innerHTML = `<span class="kpi-diff diff-up">${t('전월 대비')} ▲ ${formatNumber(diff)} (${pct})</span>`;
       } else if (diff < 0) {
-        el.innerHTML = `<span class="kpi-diff diff-down">${t('전월 대비')} ▼ ${formatNumber(Math.abs(diff))}</span>`;
+        el.innerHTML = `<span class="kpi-diff diff-down">${t('전월 대비')} ▼ ${formatNumber(Math.abs(diff))} (${pct})</span>`;
       } else {
-        el.innerHTML = `<span class="kpi-diff diff-none">${t('전월 대비 변동 없음')}</span>`;
+        el.innerHTML = `<span class="kpi-diff diff-none">${t('전월 대비 변동 없음')} (0.0%)</span>`;
       }
     }
 
@@ -1447,6 +1883,8 @@
         globalData = JSON.parse(textData);
         
         if(!globalData.sensor) globalData.sensor = {}; 
+        if(!globalData.youtubeWeekly) globalData.youtubeWeekly = {};
+        if(!globalData.youtubeUploadMetrics) globalData.youtubeUploadMetrics = {};
         if(!globalData.creatorVideos) globalData.creatorVideos = [];
         if(!globalData.instagram) globalData.instagram = [];
         if(!globalData.tiktok) globalData.tiktok = [];
@@ -1581,7 +2019,11 @@
       const prevSensor = prevMonth ? globalData.sensor[prevMonth] : null;
 
       // --- 센서타워 랜더링 ---
+      const sensorTotalDau = getSensorTotalDau(sensorData);
+      const prevSensorTotalDau = prevSensor ? getSensorTotalDau(prevSensor) : null;
+      setCounter('sensor-total-dau', sensorTotalDau);
       setCounter('sensor-dau', safeNumber(sensorData.dau));
+      renderDiff(sensorTotalDau, prevSensorTotalDau, 'diff-sensor-total-dau');
       renderDiff(safeNumber(sensorData.dau), prevSensor ? safeNumber(prevSensor.dau) : null, 'diff-sensor-dau');
 
       // --- 네이버 카페 랜더링 ---
@@ -1596,6 +2038,7 @@
       renderDiff(safeNumber(cafeData.newUsers), prevCafe ? safeNumber(prevCafe.newUsers) : null, 'diff-cafe-newusers');
       
       renderCafeChart(cafeData, prevCafe, month, prevMonth);
+      renderCafeDetailTables(month);
 
       // --- 유튜브 랜더링 ---
       setCounter('yt-v-views', safeNumber(ytData.vViews));
@@ -1623,7 +2066,7 @@
       const ytMetrics = globalData.metrics ? globalData.metrics[month] : null;
       let subs = '-';
       
-      let totalViews = safeNumber(ytData.vViews) + safeNumber(ytData.sViews);
+      let totalViews = getYoutubeTotalViews(ytData);
       if (totalViews === 0 && monthVideos.length > 0) {
         totalViews = monthVideos.reduce((sum, v) => sum + safeNumber(v.views), 0);
       }
@@ -1651,9 +2094,16 @@
 
       renderYTChart(ytData, prevYt, month, prevMonth);
       renderVideoSection(month);
+      renderWeeklyStats(month);
+      initMetricTabs();
+      initComparisonControls();
+      renderComparisonSections();
       
       renderSensorChart(month);
       renderTrendLineChart(month);
+      renderYoutubeManualSummary(month);
+      renderYoutubeUploadMetricsSummary(month);
+      renderYoutubeUploadDetailSummary(month);
       
       // --- 크리에이터 랜더링 ---
       renderCreatorSection(month, prevMonth);
@@ -2170,7 +2620,7 @@
       targetMonths.forEach(m => {
         labels.push(currentLang === 'en' ? `${m.split('.')[1]}` : `${m.split('.')[1]}월`);
         const yt = globalData.youtube[m] || {};
-        const cViews = safeNumber(yt.vViews) + safeNumber(yt.sViews);
+        const cViews = getYoutubeTotalViews(yt);
         
         let cLikes = 0, cComms = 0;
         const monthVids = (globalData.videos || []).filter(v => v.month === m);
@@ -2337,6 +2787,660 @@
           }
         });
       });
+    }
+
+
+    function renderYoutubeManualSummary(month) {
+      const bodyMap = {
+        total: document.getElementById('youtubeManualTotalBody'),
+        vod: document.getElementById('youtubeManualVodBody'),
+        shorts: document.getElementById('youtubeManualShortsBody'),
+        posts: document.getElementById('youtubeManualPostsBody')
+      };
+      if (!bodyMap.total) return;
+
+      const monthsList = globalData.months || [];
+      const idx = monthsList.indexOf(month);
+      const targetMonths = idx >= 0 ? monthsList.slice(idx, idx + 3) : monthsList.slice(0, 3);
+      const rows = targetMonths
+        .map(m => ({ month: m, yt: (globalData.youtube || {})[m] || {}, prevMonth: monthsList[monthsList.indexOf(m) + 1] }))
+        .filter(row => row.month && Object.keys(row.yt || {}).length > 0);
+
+      const emptyRow = colspan => `<tr><td colspan="${colspan}" style="text-align:center; padding:40px; color:#cbd5e1;">${t('데이터가 없습니다.')}</td></tr>`;
+      if (rows.length === 0) {
+        if (bodyMap.total) bodyMap.total.innerHTML = emptyRow(2);
+        if (bodyMap.vod) bodyMap.vod.innerHTML = emptyRow(5);
+        if (bodyMap.shorts) bodyMap.shorts.innerHTML = emptyRow(5);
+        if (bodyMap.posts) bodyMap.posts.innerHTML = emptyRow(4);
+        return;
+      }
+
+      function monthCell(row) {
+        return `<td style="text-align:center; font-weight:900; color:#0f172a;">${currentLang === 'en' ? row.month.replace('.', '-') : `${row.month.split('.')[0]}년 ${row.month.split('.')[1]}월`}</td>`;
+      }
+      function metricTd(cur, prev, type) {
+        return `<td style="text-align:right; vertical-align:top;">${renderMetricCell(cur, prev, type)}</td>`;
+      }
+      function prevYt(row) {
+        return row.prevMonth ? ((globalData.youtube || {})[row.prevMonth] || null) : null;
+      }
+
+      bodyMap.total.innerHTML = rows.map(row => {
+        const prev = prevYt(row);
+        return `<tr>${monthCell(row)}${metricTd(getYoutubeTotalViews(row.yt), prev ? getYoutubeTotalViews(prev) : null, 'number')}</tr>`;
+      }).join('');
+
+      bodyMap.vod.innerHTML = rows.map(row => {
+        const prev = prevYt(row);
+        return `<tr>${monthCell(row)}
+          ${metricTd(row.yt.vViews, prev ? prev.vViews : null, 'number')}
+          ${metricTd(row.yt.vImp, prev ? prev.vImp : null, 'number')}
+          ${metricTd(row.yt.vCtr, prev ? prev.vCtr : null, 'percent')}
+          ${metricTd(row.yt.vDuration, prev ? prev.vDuration : null, 'duration')}
+        </tr>`;
+      }).join('');
+
+      bodyMap.shorts.innerHTML = rows.map(row => {
+        const prev = prevYt(row);
+        return `<tr>${monthCell(row)}
+          ${metricTd(row.yt.sViews, prev ? prev.sViews : null, 'number')}
+          ${metricTd(row.yt.sActive, prev ? prev.sActive : null, 'number')}
+          ${metricTd(row.yt.sLikes, prev ? prev.sLikes : null, 'number')}
+          ${metricTd(row.yt.sSubs, prev ? prev.sSubs : null, 'number')}
+        </tr>`;
+      }).join('');
+
+      bodyMap.posts.innerHTML = rows.map(row => {
+        const prev = prevYt(row);
+        return `<tr>${monthCell(row)}
+          ${metricTd(row.yt.cImp, prev ? prev.cImp : null, 'number')}
+          ${metricTd(row.yt.cLikes, prev ? prev.cLikes : null, 'number')}
+          ${metricTd(row.yt.cSubs, prev ? prev.cSubs : null, 'number')}
+        </tr>`;
+      }).join('');
+    }
+
+
+    function buildUploadMetricsFromVideos(month) {
+      const videos = (globalData.videos || []).filter(v => v.month === month);
+      const stats = {
+        subscriber: 0,
+        subscriberDiff: 0,
+        vodViews: 0,
+        shortsViews: 0,
+        totalViews: 0,
+        vodLikes: 0,
+        shortsLikes: 0,
+        totalLikes: 0,
+        vodUploads: 0,
+        shortsUploads: 0,
+        totalUploads: videos.length
+      };
+      videos.forEach(v => {
+        const isShorts = String(v.type || '').toLowerCase().includes('short');
+        if (isShorts) {
+          stats.shortsViews += safeNumber(v.views);
+          stats.shortsLikes += safeNumber(v.likes);
+          stats.shortsUploads += 1;
+        } else {
+          stats.vodViews += safeNumber(v.views);
+          stats.vodLikes += safeNumber(v.likes);
+          stats.vodUploads += 1;
+        }
+      });
+      stats.totalViews = stats.vodViews + stats.shortsViews;
+      stats.totalLikes = stats.vodLikes + stats.shortsLikes;
+      stats.totalUploads = stats.vodUploads + stats.shortsUploads;
+      return stats;
+    }
+
+    function getYoutubeUploadMetrics(month) {
+      const fromSheet = globalData.youtubeUploadMetrics && globalData.youtubeUploadMetrics[month];
+      if (fromSheet && Object.keys(fromSheet).length > 0) return fromSheet;
+      return buildUploadMetricsFromVideos(month);
+    }
+
+    function formatSignedNumber(value) {
+      const val = safeNumber(value);
+      if (val > 0) return `+${formatNumber(val)}`;
+      if (val < 0) return `-${formatNumber(Math.abs(val))}`;
+      return '0';
+    }
+
+    function renderMetricCell(currentValue, prevValue, type) {
+      return `
+        <div class="num-font" style="font-weight:900; color:#0f172a;">${formatManualMetricValue(currentValue, type || 'number')}</div>
+        <div style="margin-top:6px; font-size:12px;">${formatManualMetricDiff(currentValue, prevValue, type || 'number')}</div>
+      `;
+    }
+
+    function renderSignedMetricCell(currentValue, prevBaseValue) {
+      const cur = safeNumber(currentValue);
+      const pct = prevBaseValue ? `${cur >= 0 ? '+' : ''}${((cur / Math.abs(safeNumber(prevBaseValue))) * 100).toFixed(1)}%` : '-';
+      let cls = 'c-diff-none';
+      let symbol = '';
+      if (cur > 0) { cls = 'c-diff-up'; symbol = '▲ '; }
+      else if (cur < 0) { cls = 'c-diff-down'; symbol = '▼ '; }
+      return `
+        <div class="num-font" style="font-weight:900; color:#0f172a;">${formatSignedNumber(cur)}</div>
+        <div style="margin-top:6px; font-size:12px;"><span class="creator-diff-span ${cls}">${symbol}${pct}</span></div>
+      `;
+    }
+
+    function renderYoutubeUploadMetricsSummary(month) {
+      const bodyMap = {
+        total: document.getElementById('youtubeUploadTotalBody'),
+        vod: document.getElementById('youtubeUploadVodBody'),
+        shorts: document.getElementById('youtubeUploadShortsBody')
+      };
+      if (!bodyMap.total) return;
+
+      const monthsList = globalData.months || [];
+      const idx = monthsList.indexOf(month);
+      const targetMonths = idx >= 0 ? monthsList.slice(idx, idx + 3) : monthsList.slice(0, 3);
+
+      const rows = targetMonths
+        .map(m => ({ month: m, data: getYoutubeUploadMetrics(m), prevMonth: monthsList[monthsList.indexOf(m) + 1] }))
+        .filter(row => row.month && row.data && (safeNumber(row.data.totalViews) || safeNumber(row.data.totalUploads) || safeNumber(row.data.subscriber)));
+
+      const emptyRow = colspan => `<tr><td colspan="${colspan}" style="text-align:center; padding:40px; color:#cbd5e1;">${t('데이터가 없습니다.')}</td></tr>`;
+      if (rows.length === 0) {
+        bodyMap.total.innerHTML = emptyRow(6);
+        bodyMap.vod.innerHTML = emptyRow(4);
+        bodyMap.shorts.innerHTML = emptyRow(4);
+        return;
+      }
+
+      function monthCell(row) {
+        return `<td style="text-align:center; font-weight:900; color:#0f172a;">${currentLang === 'en' ? row.month.replace('.', '-') : `${row.month.split('.')[0]}년 ${row.month.split('.')[1]}월`}</td>`;
+      }
+      function metricTd(cur, prev, type) {
+        return `<td style="text-align:right; vertical-align:top;">${renderMetricCell(cur, prev, type || 'number')}</td>`;
+      }
+      function signedTd(cur, prevSubscriber) {
+        return `<td style="text-align:right; vertical-align:top;">${renderSignedMetricCell(cur, prevSubscriber)}</td>`;
+      }
+      function prevData(row) {
+        return row.prevMonth ? getYoutubeUploadMetrics(row.prevMonth) : null;
+      }
+
+      bodyMap.total.innerHTML = rows.map(row => {
+        const prev = prevData(row);
+        return `<tr>${monthCell(row)}
+          ${metricTd(row.data.subscriber, prev ? prev.subscriber : null)}
+          ${signedTd(row.data.subscriberDiff, prev ? prev.subscriber : null)}
+          ${metricTd(row.data.totalViews, prev ? prev.totalViews : null)}
+          ${metricTd(row.data.totalLikes, prev ? prev.totalLikes : null)}
+          ${metricTd(row.data.totalUploads, prev ? prev.totalUploads : null)}
+        </tr>`;
+      }).join('');
+
+      bodyMap.vod.innerHTML = rows.map(row => {
+        const prev = prevData(row);
+        return `<tr>${monthCell(row)}
+          ${metricTd(row.data.vodViews, prev ? prev.vodViews : null)}
+          ${metricTd(row.data.vodLikes, prev ? prev.vodLikes : null)}
+          ${metricTd(row.data.vodUploads, prev ? prev.vodUploads : null)}
+        </tr>`;
+      }).join('');
+
+      bodyMap.shorts.innerHTML = rows.map(row => {
+        const prev = prevData(row);
+        return `<tr>${monthCell(row)}
+          ${metricTd(row.data.shortsViews, prev ? prev.shortsViews : null)}
+          ${metricTd(row.data.shortsLikes, prev ? prev.shortsLikes : null)}
+          ${metricTd(row.data.shortsUploads, prev ? prev.shortsUploads : null)}
+        </tr>`;
+      }).join('');
+    }
+
+
+    function initVideoStatsBucket() {
+      return { uploads: 0, views: 0, likes: 0, comments: 0 };
+    }
+
+    function buildVideoDetailStats(month) {
+      const stats = {
+        all: initVideoStatsBucket(),
+        VOD: initVideoStatsBucket(),
+        Shorts: initVideoStatsBucket()
+      };
+      (globalData.videos || []).filter(v => v.month === month).forEach(v => {
+        const type = String(v.type || '').toLowerCase().includes('short') ? 'Shorts' : 'VOD';
+        [stats.all, stats[type]].forEach(bucket => {
+          bucket.uploads += 1;
+          bucket.views += safeNumber(v.views);
+          bucket.likes += safeNumber(v.likes);
+          bucket.comments += safeNumber(v.comments);
+        });
+      });
+      Object.keys(stats).forEach(key => {
+        const b = stats[key];
+        b.avgViews = b.uploads ? b.views / b.uploads : 0;
+        b.avgLikes = b.uploads ? b.likes / b.uploads : 0;
+        b.avgComments = b.uploads ? b.comments / b.uploads : 0;
+      });
+      return stats;
+    }
+
+    function renderSummaryCard(label, current, prev, type) {
+      return `
+        <div class="glass-card">
+          <span class="metric-mini">${label}</span>
+          <div class="metric-big num-font" style="font-size:clamp(28px,3vw,38px);">${formatManualMetricValue(current, type || 'number')}</div>
+          <div>${formatManualMetricDiff(current, prev, type || 'number')}</div>
+        </div>
+      `;
+    }
+
+    function renderYoutubeUploadDetailSummary(month) {
+      const container = document.getElementById('youtubeUploadDetailSummary');
+      if (!container) return;
+      const monthsList = globalData.months || [];
+      const prevMonth = monthsList[monthsList.indexOf(month) + 1];
+      const cur = buildVideoDetailStats(month);
+      const prev = prevMonth ? buildVideoDetailStats(prevMonth) : null;
+
+      if (!cur.all.uploads) {
+        container.innerHTML = `<div class="glass-card" style="text-align:center; color:#94a3b8;">${t('데이터가 없습니다.')}</div>`;
+        return;
+      }
+
+      const prevAll = prev ? prev.all : null;
+      const totalCards = [
+        renderSummaryCard(t('업로드 수'), cur.all.uploads, prevAll ? prevAll.uploads : null),
+        renderSummaryCard(t('조회수 합계'), cur.all.views, prevAll ? prevAll.views : null),
+        renderSummaryCard(t('좋아요 합계'), cur.all.likes, prevAll ? prevAll.likes : null),
+        renderSummaryCard(t('댓글 합계'), cur.all.comments, prevAll ? prevAll.comments : null)
+      ].join('');
+      const avgCards = [
+        renderSummaryCard(t('평균 조회수'), cur.all.avgViews, prevAll ? prevAll.avgViews : null),
+        renderSummaryCard(t('평균 좋아요'), cur.all.avgLikes, prevAll ? prevAll.avgLikes : null),
+        renderSummaryCard(t('평균 댓글'), cur.all.avgComments, prevAll ? prevAll.avgComments : null)
+      ].join('');
+
+      const typeRows = ['VOD', 'Shorts'].map(type => {
+        const c = cur[type];
+        const p = prev ? prev[type] : null;
+        return `
+          <tr>
+            <td style="text-align:center; font-weight:900; color:#0f172a;">${type}</td>
+            <td style="text-align:right;">${renderMetricCell(c.uploads, p ? p.uploads : null)}</td>
+            <td style="text-align:right;">${renderMetricCell(c.views, p ? p.views : null)}</td>
+            <td style="text-align:right;">${renderMetricCell(c.avgViews, p ? p.avgViews : null)}</td>
+            <td style="text-align:right;">${renderMetricCell(c.likes, p ? p.likes : null)}</td>
+            <td style="text-align:right;">${renderMetricCell(c.comments, p ? p.comments : null)}</td>
+          </tr>
+        `;
+      }).join('');
+
+      container.innerHTML = `
+        <div style="margin-bottom:16px;">
+          <h3 style="margin:0 0 16px; font-size:20px; color:#0f172a;" data-i18n>${t('당월 업로드 공식 영상 합계/평균')}</h3>
+          <div class="grid-4" style="margin-bottom:20px;">${totalCards}</div>
+          <div class="grid-3" style="margin-bottom:20px;">${avgCards}</div>
+        </div>
+        <div class="glass-card" style="padding:0; overflow:hidden;">
+          <div style="padding:20px 24px 0; font-size:20px; font-weight:900; color:#0f172a;">${t('유형별 합계/평균')}</div>
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th style="text-align:center;">${t('구분')}</th>
+                  <th style="text-align:right;">${t('업로드 수')}</th>
+                  <th style="text-align:right;">${t('조회수 합계')}</th>
+                  <th style="text-align:right;">${t('평균 조회수')}</th>
+                  <th style="text-align:right;">${t('좋아요 합계')}</th>
+                  <th style="text-align:right;">${t('댓글 합계')}</th>
+                </tr>
+              </thead>
+              <tbody>${typeRows}</tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    function parseDateFromString(value) {
+      if (!value) return null;
+      const str = String(value).trim().replace(/\./g, '-').replace(/\//g, '-');
+      const parsed = new Date(str);
+      return isNaN(parsed) ? null : parsed;
+    }
+
+    function getWeekLabelFromDateString(value) {
+      const date = parseDateFromString(value);
+      if (!date) return '1주차';
+      return `${Math.ceil(date.getDate() / 7)}주차`;
+    }
+
+    function getSensorTotalDau(sensor) {
+      if (!sensor) return 0;
+      if (sensor.totalDau !== undefined) return safeNumber(sensor.totalDau);
+      if (Array.isArray(sensor.daily)) return sensor.daily.reduce((sum, d) => sum + safeNumber(d.dau), 0);
+      return safeNumber(sensor.dau) * safeNumber(sensor.days || 0);
+    }
+
+    function formatWatchHours(hours) {
+      if (hours === undefined || hours === null || hours === '') return '-';
+      const val = safeNumber(hours);
+      if (val === 0) return '-';
+      const rounded = Math.round(val * 10) / 10;
+      return currentLang === 'en' ? `${formatNumber(rounded)} h` : `${formatNumber(rounded)}시간`;
+    }
+
+    function buildWeeklyStatsFromVideos(month) {
+      const map = {};
+      (globalData.videos || []).filter(v => v.month === month).forEach(v => {
+        const week = getWeekLabelFromDateString(v.date);
+        if (!map[week]) map[week] = { week: week, views: 0, watchTime: 0, uploads: 0, hasWatchTime: false };
+        map[week].views += safeNumber(v.views);
+        if (v.watchTime !== undefined && v.watchTime !== null && v.watchTime !== '') {
+          map[week].watchTime += safeNumber(v.watchTime);
+          if (safeNumber(v.watchTime) > 0) map[week].hasWatchTime = true;
+        }
+        map[week].uploads += 1;
+      });
+      return Object.values(map).sort((a,b) => parseInt(a.week, 10) - parseInt(b.week, 10));
+    }
+
+    function renderWeeklyStats(month) {
+      const body = document.getElementById('weeklyStatsBody');
+      if (!body) return;
+      const weekly = (globalData.youtubeWeekly && globalData.youtubeWeekly[month])
+        ? globalData.youtubeWeekly[month]
+        : buildWeeklyStatsFromVideos(month);
+
+      if (!weekly || weekly.length === 0) {
+        body.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:40px; color:#cbd5e1;">${t('데이터가 없습니다.')}</td></tr>`;
+        return;
+      }
+
+      body.innerHTML = weekly.map(w => `
+        <tr>
+          <td style="text-align:center; font-weight:900;" class="num-font">${currentLang === 'en' ? w.week.replace('주차', 'W') : w.week}</td>
+          <td style="text-align:right; font-weight:900;" class="num-font">${formatNumber(safeNumber(w.views))}</td>
+          <td style="text-align:right; font-weight:900;" class="num-font">${w.hasWatchTime === false ? '-' : formatWatchHours(w.watchTime)}</td>
+          <td style="text-align:right; font-weight:900;" class="num-font">${formatNumber(safeNumber(w.uploads))}</td>
+        </tr>
+      `).join('');
+    }
+
+    function getMonthYear(monthKey) {
+      return String(monthKey || '').split('.')[0];
+    }
+
+    function getQuarterKey(monthKey) {
+      const [year, month] = String(monthKey || '').split('.');
+      const q = Math.ceil((Number(month) || 1) / 3);
+      return `${year}-Q${q}`;
+    }
+
+    function sortQuarterKeysDesc(keys) {
+      return keys.sort((a, b) => {
+        const [ay, aq] = a.split('-Q').map(Number);
+        const [by, bq] = b.split('-Q').map(Number);
+        return by !== ay ? by - ay : bq - aq;
+      });
+    }
+
+    function labelQuarter(key) {
+      const [year, q] = String(key).split('-Q');
+      return currentLang === 'en' ? `${year} Q${q}` : `${year}년 ${q}분기`;
+    }
+
+    function getAvailableYears() {
+      return Array.from(new Set((globalData.months || []).map(getMonthYear).filter(Boolean))).sort((a,b) => Number(b) - Number(a));
+    }
+
+    function getAvailableQuarters() {
+      return sortQuarterKeysDesc(Array.from(new Set((globalData.months || []).map(getQuarterKey).filter(Boolean))));
+    }
+
+    function populateSelect(selectId, options, labelFn, defaultValue) {
+      const select = document.getElementById(selectId);
+      if (!select) return;
+      const current = select.value;
+      const nextValue = options.includes(current) ? current : defaultValue;
+      select.innerHTML = options.map(opt => `<option value="${opt}">${labelFn(opt)}</option>`).join('');
+      select.value = nextValue || options[0] || '';
+    }
+
+    function monthsForPeriod(mode, key) {
+      if (mode === 'year') return (globalData.months || []).filter(m => getMonthYear(m) === String(key));
+      return (globalData.months || []).filter(m => getQuarterKey(m) === String(key));
+    }
+
+    function buildPeriodStats(months) {
+      const stats = {
+        months: months.length,
+        totalDau: 0,
+        dauDays: 0,
+        avgDau: 0,
+        ytViews: 0,
+        ytInteractions: 0,
+        uploads: 0,
+        watchTime: 0,
+        cafeVisits: 0,
+        cafePosts: 0,
+        cafeComments: 0,
+        cafeNewUsers: 0
+      };
+
+      months.forEach(m => {
+        const sensor = globalData.sensor[m] || {};
+        const sensorTotal = getSensorTotalDau(sensor);
+        stats.totalDau += sensorTotal;
+        stats.dauDays += safeNumber(sensor.days) || (Array.isArray(sensor.daily) ? sensor.daily.length : 0);
+
+        const yt = globalData.youtube[m] || {};
+        let monthViews = getYoutubeTotalViews(yt);
+        const monthVideos = (globalData.videos || []).filter(v => v.month === m);
+        if (monthViews === 0 && monthVideos.length > 0) {
+          monthViews = monthVideos.reduce((sum, v) => sum + safeNumber(v.views), 0);
+        }
+        stats.ytViews += monthViews;
+        stats.uploads += monthVideos.length;
+
+        let likes = 0, comments = 0;
+        monthVideos.forEach(v => {
+          likes += safeNumber(v.likes);
+          comments += safeNumber(v.comments);
+        });
+        stats.ytInteractions += likes + comments + safeNumber(yt.cLikes);
+
+        if (globalData.youtubeWeekly && globalData.youtubeWeekly[m]) {
+          const weeklyRows = globalData.youtubeWeekly[m] || [];
+          const hasWeeklyWatch = weeklyRows.some(w => w.hasWatchTime !== false && safeNumber(w.watchTime) > 0);
+          if (hasWeeklyWatch) stats.watchTime += weeklyRows.reduce((sum, w) => sum + safeNumber(w.watchTime), 0);
+          else stats.watchTime += monthVideos.reduce((sum, v) => sum + safeNumber(v.watchTime), 0);
+        } else {
+          stats.watchTime += monthVideos.reduce((sum, v) => sum + safeNumber(v.watchTime), 0);
+        }
+
+        const cafe = globalData.cafe[m] || {};
+        stats.cafeVisits += safeNumber(cafe.visits);
+        stats.cafePosts += safeNumber(cafe.posts);
+        stats.cafeComments += safeNumber(cafe.comments);
+        stats.cafeNewUsers += safeNumber(cafe.newUsers);
+      });
+
+      stats.avgDau = stats.dauDays > 0 ? Math.round(stats.totalDau / stats.dauDays) : 0;
+      return stats;
+    }
+
+    function initComparisonControls() {
+      if (comparisonInitialized) return;
+      comparisonInitialized = true;
+
+      document.querySelectorAll('.comparison-tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          currentComparisonTab = btn.dataset.compareTab || 'year';
+          renderComparisonSections();
+        });
+      });
+
+      ['yearCompareA','yearCompareB','quarterCompareA','quarterCompareB'].forEach(id => {
+        document.getElementById(id)?.addEventListener('change', renderComparisonSections);
+      });
+    }
+
+    function renderComparisonSections() {
+      const years = getAvailableYears();
+      const quarters = getAvailableQuarters();
+
+      // 기본값은 좌측=이전 기간, 우측=최신 기간
+      populateSelect('yearCompareA', years, y => currentLang === 'en' ? `${y}` : `${y}년`, years[1] || years[0]);
+      populateSelect('yearCompareB', years, y => currentLang === 'en' ? `${y}` : `${y}년`, years[0]);
+      populateSelect('quarterCompareA', quarters, labelQuarter, quarters[1] || quarters[0]);
+      populateSelect('quarterCompareB', quarters, labelQuarter, quarters[0]);
+
+      document.querySelectorAll('.comparison-tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.compareTab === currentComparisonTab);
+      });
+      document.getElementById('year-compare-pane')?.classList.toggle('hidden', currentComparisonTab !== 'year');
+      document.getElementById('quarter-compare-pane')?.classList.toggle('hidden', currentComparisonTab !== 'quarter');
+
+      renderPeriodComparison('year');
+      renderPeriodComparison('quarter');
+    }
+
+    function periodDiffCell(oldValue, recentValue) {
+      const diff = safeNumber(recentValue) - safeNumber(oldValue);
+      const pct = formatPercentChange(recentValue, oldValue);
+      if (diff > 0) return `<span class="kpi-diff diff-up">▲ ${formatNumber(Math.round(diff))} (${pct})</span>`;
+      if (diff < 0) return `<span class="kpi-diff diff-down">▼ ${formatNumber(Math.round(Math.abs(diff)))} (${pct})</span>`;
+      return `<span class="kpi-diff diff-none">0 (0.0%)</span>`;
+    }
+
+    function renderPeriodSummaryCards(containerId, statsOld, statsRecent) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      const cards = [
+        { label: t('평균 DAU'), value: statsRecent.avgDau, prev: statsOld.avgDau },
+        { label: t('총 DAU'), value: statsRecent.totalDau, prev: statsOld.totalDau },
+        { label: t('유튜브 조회수'), value: statsRecent.ytViews, prev: statsOld.ytViews },
+        { label: t('유튜브 인터랙션'), value: statsRecent.ytInteractions, prev: statsOld.ytInteractions }
+      ];
+      container.innerHTML = cards.map(c => `
+        <div class="period-mini-card">
+          <div class="label">${c.label}</div>
+          <div class="value num-font">${formatNumber(c.value)}</div>
+          <div style="margin-top:10px;">${periodDiffCell(c.prev, c.value)}</div>
+        </div>
+      `).join('');
+    }
+
+    function renderPeriodComparison(mode) {
+      const aId = mode === 'year' ? 'yearCompareA' : 'quarterCompareA';
+      const bId = mode === 'year' ? 'yearCompareB' : 'quarterCompareB';
+      const aKey = document.getElementById(aId)?.value;
+      const bKey = document.getElementById(bId)?.value;
+      if (!aKey || !bKey) return;
+
+      const statsA = buildPeriodStats(monthsForPeriod(mode, aKey));
+      const statsB = buildPeriodStats(monthsForPeriod(mode, bKey));
+      const prefix = mode === 'year' ? 'year' : 'quarter';
+      const labelA = mode === 'year' ? (currentLang === 'en' ? aKey : `${aKey}년`) : labelQuarter(aKey);
+      const labelB = mode === 'year' ? (currentLang === 'en' ? bKey : `${bKey}년`) : labelQuarter(bKey);
+
+      setText(`${prefix}CompareAHead`, labelA);
+      setText(`${prefix}CompareBHead`, labelB);
+      renderPeriodSummaryCards(`${prefix}SummaryCards`, statsA, statsB);
+
+      const rows = [
+        { label: t('평균 DAU'), a: statsA.avgDau, b: statsB.avgDau },
+        { label: t('총 DAU'), a: statsA.totalDau, b: statsB.totalDau },
+        { label: t('유튜브 조회수'), a: statsA.ytViews, b: statsB.ytViews },
+        { label: t('유튜브 인터랙션'), a: statsA.ytInteractions, b: statsB.ytInteractions },
+        { label: t('시청 시간'), a: statsA.watchTime, b: statsB.watchTime, watch: true },
+        { label: t('월간 업로드 수'), a: statsA.uploads, b: statsB.uploads },
+        { label: t('카페 방문'), a: statsA.cafeVisits, b: statsB.cafeVisits },
+        { label: t('카페 게시글'), a: statsA.cafePosts, b: statsB.cafePosts },
+        { label: t('카페 댓글'), a: statsA.cafeComments, b: statsB.cafeComments },
+        { label: t('카페 신규 가입자'), a: statsA.cafeNewUsers, b: statsB.cafeNewUsers }
+      ];
+
+      const body = document.getElementById(`${prefix}CompareBody`);
+      if (!body) return;
+      body.innerHTML = rows.map(row => `
+        <tr>
+          <td style="font-weight:900;">${row.label}</td>
+          <td style="text-align:right; font-weight:900;" class="num-font">${row.watch ? formatWatchHours(row.a) : formatNumber(row.a)}</td>
+          <td style="text-align:right; font-weight:900;" class="num-font">${row.watch ? formatWatchHours(row.b) : formatNumber(row.b)}</td>
+          <td style="text-align:right;">${periodDiffCell(row.a, row.b)}</td>
+        </tr>
+      `).join('');
+    }
+
+    function initMetricTabs() {
+      if (metricTabsInitialized) return;
+      metricTabsInitialized = true;
+      document.querySelectorAll('.metric-sub-tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const group = btn.closest('.metric-sub-tabs')?.dataset.metricTabGroup;
+          const target = btn.dataset.metricTabTarget;
+          if (!group || !target) return;
+          document.querySelectorAll(`.metric-sub-tabs[data-metric-tab-group="${group}"] .metric-sub-tab-btn`).forEach(b => {
+            b.classList.toggle('active', b === btn);
+          });
+          document.querySelectorAll(`.metric-tab-pane[data-metric-tab-group="${group}"]`).forEach(pane => {
+            pane.classList.toggle('hidden', pane.id !== target);
+          });
+        });
+      });
+    }
+
+    function renderCafeDetailTables(month) {
+      const ageBody = document.getElementById('cafeAgeDetailBody');
+      const activityBody = document.getElementById('cafeActivityDetailBody');
+      if (!ageBody || !activityBody) return;
+
+      const monthsList = globalData.months || [];
+      const idx = monthsList.indexOf(month);
+      const targetMonths = idx >= 0 ? monthsList.slice(idx, idx + 3) : monthsList.slice(0, 3);
+      const rows = targetMonths
+        .map(m => ({ month: m, cafe: (globalData.cafe || {})[m] || {}, prevMonth: monthsList[monthsList.indexOf(m) + 1] }))
+        .filter(row => row.month && Object.keys(row.cafe || {}).length > 0);
+
+      const emptyAge = `<tr><td colspan="6" style="text-align:center; padding:40px; color:#cbd5e1;">${t('데이터가 없습니다.')}</td></tr>`;
+      const emptyActivity = `<tr><td colspan="5" style="text-align:center; padding:40px; color:#cbd5e1;">${t('데이터가 없습니다.')}</td></tr>`;
+      if (rows.length === 0) {
+        ageBody.innerHTML = emptyAge;
+        activityBody.innerHTML = emptyActivity;
+        return;
+      }
+
+      function monthCell(row) {
+        return `<td style="text-align:center; font-weight:900; color:#0f172a;">${currentLang === 'en' ? row.month.replace('.', '-') : `${row.month.split('.')[0]}년 ${row.month.split('.')[1]}월`}</td>`;
+      }
+      function metricTd(cur, prev) {
+        return `<td style="text-align:right; vertical-align:top;">${renderMetricCell(cur, prev, 'number')}</td>`;
+      }
+      function prevCafe(row) {
+        return row.prevMonth ? ((globalData.cafe || {})[row.prevMonth] || null) : null;
+      }
+
+      ageBody.innerHTML = rows.map(row => {
+        const prev = prevCafe(row);
+        return `<tr>${monthCell(row)}
+          ${metricTd(row.cafe.total, prev ? prev.total : null)}
+          ${metricTd(row.cafe.age10, prev ? prev.age10 : null)}
+          ${metricTd(row.cafe.age20, prev ? prev.age20 : null)}
+          ${metricTd(row.cafe.age30, prev ? prev.age30 : null)}
+          ${metricTd(row.cafe.age40, prev ? prev.age40 : null)}
+        </tr>`;
+      }).join('');
+
+      activityBody.innerHTML = rows.map(row => {
+        const prev = prevCafe(row);
+        return `<tr>${monthCell(row)}
+          ${metricTd(row.cafe.visits, prev ? prev.visits : null)}
+          ${metricTd(row.cafe.posts, prev ? prev.posts : null)}
+          ${metricTd(row.cafe.comments, prev ? prev.comments : null)}
+          ${metricTd(row.cafe.newUsers, prev ? prev.newUsers : null)}
+        </tr>`;
+      }).join('');
     }
 
     function renderCafeChart(cafe, prevCafe, currentMonth, prevMonth) {
